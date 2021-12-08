@@ -1,17 +1,61 @@
-import React from "react";
+import React, {useState} from "react";
 import { Platform,TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, ScrollView} from 'react-native';
 import { Container, AreaTextos , Titulo, SubTitulo, TextInfo, ContainerForm, AreaDados, Label, Input, BotaoCadastrar, TextoBotao } from './style';
 import { useNavigation } from "@react-navigation/native";
 
 import HeaderAuth from "../../components/headerAuth";
+import api from "../../services/api";
 
 export default function Cadastro(){
 
     const navigation = useNavigation();
 
+    const [nome, setNome] = useState(null);
+    const [sobreNome, setSobreNome] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [senha, setSenha] = useState(null);
+
+    async function cadastrarUsuario(){
+        try{
+            const response = await api.post('/candidatos/create', {
+                'nome': nome,
+                'sobrenome': sobreNome,
+                'email': email,
+                'senha': senha
+            })
+
+            //console.log(response);
+            alert("Sucesso")
+        }catch{
+            alert("Falha ao tentar cadastrar")
+        }
+    }
+
+    // const cadastrarUsuario = async (event) => {
+    //     const response = await api.post('/candidatos/create', {
+    //         'nome': nome,
+    //         'sobreNome': sobreNome,
+    //         'email': email,
+    //         'senha': senha,
+    //     });
+
+    //     console.log(response);
+    // };
+
     function cadastrar(){
 
-        navigation.navigate("ConfirmacaoCadastro");
+        if(nome == null || sobreNome == null || email == null || senha == null){
+
+            
+            alert("Preencha todos os campos");
+
+        }else{
+            
+            alert("chamando")
+           cadastrarUsuario();
+           
+        }
+        //navigation.navigate("ConfirmacaoCadastro");
     }
     
 
@@ -32,22 +76,22 @@ export default function Cadastro(){
                             
                             <AreaDados>
                                 <Label>Nome</Label>
-                                <Input />
+                                <Input onChangeText={ (text) => setNome(text)} />
                             </AreaDados>
                             <AreaDados>
                                 <Label>Sobrenome</Label>
-                                <Input />
+                                <Input onChangeText={ (text) => setSobreNome(text)}/>
                             </AreaDados>
                             <AreaDados>
                                 <Label>Email</Label>
-                                <Input />
+                                <Input onChangeText={ (text) => setEmail(text)}/>
                             </AreaDados>
                             <AreaDados>
                                 <Label>Senha</Label>
-                                <Input />
+                                <Input onChangeText={ (text) => setSenha(text)}/>
                             </AreaDados>
                             <AreaDados>
-                                <BotaoCadastrar onPress={cadastrar}>
+                                <BotaoCadastrar onPress={cadastrarUsuario}>
                                     <TextoBotao>Criar conta</TextoBotao>
                                 </BotaoCadastrar>
                             </AreaDados>
