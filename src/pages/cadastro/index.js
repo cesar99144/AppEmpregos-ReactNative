@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Platform,TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, ScrollView} from 'react-native';
 import { Container, AreaTextos , Titulo, SubTitulo, TextInfo, ContainerForm, AreaDados, Label, Input, BotaoCadastrar, TextoBotao } from './style';
 import { useNavigation } from "@react-navigation/native";
@@ -16,31 +16,21 @@ export default function Cadastro(){
     const [senha, setSenha] = useState(null);
 
     async function cadastrarUsuario(){
+        
         try{
             const response = await api.post('/candidatos/create', {
-                'nome': nome,
-                'sobrenome': sobreNome,
-                'email': email,
-                'senha': senha
+                nome: nome,
+                sobrenome: sobreNome,
+                email: email,
+                senha: senha
             })
 
-            //console.log(response);
+           
             alert("Sucesso")
-        }catch{
-            alert("Falha ao tentar cadastrar")
+        }catch(error){
+            alert(error)
         }
     }
-
-    // const cadastrarUsuario = async (event) => {
-    //     const response = await api.post('/candidatos/create', {
-    //         'nome': nome,
-    //         'sobreNome': sobreNome,
-    //         'email': email,
-    //         'senha': senha,
-    //     });
-
-    //     console.log(response);
-    // };
 
     function cadastrar(){
 
@@ -51,7 +41,7 @@ export default function Cadastro(){
 
         }else{
             
-            alert("chamando")
+            //alert("chamando")
            cadastrarUsuario();
            
         }
@@ -91,7 +81,7 @@ export default function Cadastro(){
                                 <Input onChangeText={ (text) => setSenha(text)}/>
                             </AreaDados>
                             <AreaDados>
-                                <BotaoCadastrar onPress={cadastrarUsuario}>
+                                <BotaoCadastrar onPress={cadastrar}>
                                     <TextoBotao>Criar conta</TextoBotao>
                                 </BotaoCadastrar>
                             </AreaDados>
