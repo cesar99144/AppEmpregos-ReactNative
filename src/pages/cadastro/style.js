@@ -15,9 +15,25 @@ export const Titulo = styled.Text`
     color: #393939;
 `;
 
+export const AreaInfoConta = styled.View`
+    flex-direction: row;
+`;
+
 export const SubTitulo = styled.Text`
     font-size: 45px;
     color: #393939;
+    font-weight: bold;
+`;
+
+export const BotaoLogin = styled.TouchableOpacity`
+    align-items: center;
+    width: 50%;
+`;
+
+export const TextoBotaoLogin = styled.Text`
+    font-size: 23px;
+    color: #1C58F2;
+    margin-top: 10%;
     font-weight: bold;
 `;
 
