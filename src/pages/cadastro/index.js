@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Platform,TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, ScrollView} from 'react-native';
-import { Container, AreaTextos , Titulo, SubTitulo, TextInfo, ContainerForm, AreaDados, Label, Input, BotaoCadastrar, TextoBotao } from './style';
+import { Container, AreaTextos , Titulo, SubTitulo, TextInfo, ContainerForm, AreaDados, Label, Input, BotaoCadastrar, TextoBotao, AreaInfoConta, BotaoLogin, TextoBotaoLogin } from './style';
 import { useNavigation } from "@react-navigation/native";
 
 import HeaderAuth from "../../components/headerAuth";
@@ -10,26 +10,31 @@ export default function Cadastro(){
 
     const navigation = useNavigation();
 
-    const [nome, setNome] = useState(null);
-    const [sobreNome, setSobreNome] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [senha, setSenha] = useState(null);
+    const [nome, setNome] = useState("");
+    const [sobreNome, setSobreNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+
 
     async function cadastrarUsuario(){
         
         try{
-            const response = await api.post('/candidatos/create', {
-                nome: nome,
-                sobrenome: sobreNome,
-                email: email,
-                senha: senha
-            })
 
-           
-            alert("Sucesso")
-        }catch(error){
-            alert(error)
-        }
+            const response = await api.post('/candidatos/create', {
+              nome: nome,
+              sobrenome: sobreNome,
+              email: email,
+              senha: senha
+          })
+  
+          if(response.data.status == 201){
+  
+                navigation.navigate("ConfirmacaoCadastro");
+          }
+  
+          }catch(error){
+             alert(error)
+          }
     }
 
     function cadastrar(){
@@ -47,6 +52,10 @@ export default function Cadastro(){
         }
         //navigation.navigate("ConfirmacaoCadastro");
     }
+
+    function login(){
+        navigation.navigate("Login");
+    }
     
 
     return(
@@ -57,7 +66,13 @@ export default function Cadastro(){
 
                     <AreaTextos>
                         <Titulo>Preencha os dados e crie sua</Titulo>
-                        <SubTitulo>Conta</SubTitulo>
+                        <AreaInfoConta>
+                            <SubTitulo>Conta |</SubTitulo>
+                            <BotaoLogin onPress={login}>
+                                <TextoBotaoLogin>Já tenho conta</TextoBotaoLogin>
+                            </BotaoLogin>
+                        </AreaInfoConta> 
+
                         <TextInfo>Todos os campos são necessários</TextInfo>
                     </AreaTextos>
 
