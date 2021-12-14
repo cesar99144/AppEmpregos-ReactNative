@@ -17,7 +17,7 @@ export const Titulo = styled.Text`
 `;
 
 export const SubTitulo = styled.Text`
-    font-size: 45px;
+    font-size: 43px;
     color: #393939;
     font-weight: bold;
 `;
