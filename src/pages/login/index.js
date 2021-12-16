@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {ScrollView} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AreaDadosLogin, BotaoLogin } from './style';
@@ -16,14 +16,53 @@ import {
 } from './../cadastro/style';
 
 import HeaderAuth from "../../components/headerAuth";
+import api from "../../services/api";
 
 export default function Login(){
 
     const navigation = useNavigation();
 
-    function login(){
+    const [emailUser, setEmail] = useState(null);
+    const [senhaUser, setSenha] = useState(null);
 
-        navigation.navigate("DrawerRoutes");
+    async function login(){
+
+        try{
+
+            const response = await api.post('/candidatos/login', {
+                email: emailUser,
+                senha: senhaUser
+            })
+
+            if(response.data.status == 200){
+  
+                navigation.navigate("DrawerRoutes");
+                console.log(response.data);
+
+            }else if(response.data.status == 401){
+
+                alert("Dados inválidos. Verifique os dados  e tente novamente"+emailUser+senhaUser);
+                console.log(response.data);
+            }
+
+        }catch(error){
+
+            alert(error)
+            
+        }
+
+    }
+
+    function analisarDados(){
+
+        if(emailUser == null || senhaUser == null){
+
+            alert("Preencha os dados")
+        
+        }else{
+            
+            login();
+        }
     }
 
     return(
@@ -41,16 +80,16 @@ export default function Login(){
 
                     <AreaDadosLogin>
                         <Label>Email</Label>
-                        <Input placeholder="exemplo@email.com"/>
+                        <Input placeholder="exemplo@email.com" onChangeText={ (text) => setEmail(text)}/>
                     </AreaDadosLogin>
                     
                     <AreaDadosLogin>
                         <Label>Senha</Label>
-                        <Input placeholder="Digite sua senha"/>
+                        <Input placeholder="Digite sua senha" onChangeText={ (text) => setSenha(text)}/>
                     </AreaDadosLogin>
 
                     <AreaDadosLogin>
-                        <BotaoLogin onPress={login}>
+                        <BotaoLogin onPress={analisarDados}>
                             <TextoBotao>Login</TextoBotao>
                         </BotaoLogin>
                     </AreaDadosLogin>
