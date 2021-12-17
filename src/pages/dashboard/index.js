@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {ScrollView} from "react-native";
 import { 
     Container,
@@ -13,20 +13,27 @@ import {
     Titulovagas,
     ListVagas
 } from './style';
-
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/Feather';
 
 import HeaderDashboard from "../../components/headerDashboard";
 import CardVagas from "../../components/CardVagas";
 
 export default function Dashboard(){
+
+    const navigation = useNavigation();
+    const route = useRoute();
+    
+    // useEffect( ()=>{
+        
+    // }, []);
     return(
         <Container>
             <HeaderDashboard />
             
             <AreaTextos>
                 <Titulo>Olá, bem vindo(a) de volta</Titulo>
-                <SubTitulo>César</SubTitulo>
+                <SubTitulo></SubTitulo>
             </AreaTextos>
 
             <ScrollView showsVerticalScrollIndicator={false}>
