@@ -35,10 +35,9 @@ export default function Login(){
             })
 
             if(response.data.status == 200){
-  
-                navigation.navigate('DrawerRoutes', { 
-                    email: emailUser
-                  });
+
+                 navigation.navigate('DrawerRoutes', {emailUser});
+                 //navigation.navigate('Dashboard', { params: { email: "son" },});
                 console.log(response.data);
 
             }else if(response.data.status == 401){
