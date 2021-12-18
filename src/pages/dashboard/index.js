@@ -19,21 +19,23 @@ import Icon from 'react-native-vector-icons/Feather';
 import HeaderDashboard from "../../components/headerDashboard";
 import CardVagas from "../../components/CardVagas";
 
-export default function Dashboard(){
+export default function Dashboard({route}){
 
     const navigation = useNavigation();
-    const route = useRoute();
-    
-    // useEffect( ()=>{
-        
-    // }, []);
+    // const route = useRoute();
+    const {emailUser} = route.params;
+
+    useEffect( () =>{
+        alert("Pesquisa"+ emailUser)
+    }, []);
+
     return(
         <Container>
             <HeaderDashboard />
             
             <AreaTextos>
                 <Titulo>Olá, bem vindo(a) de volta</Titulo>
-                <SubTitulo></SubTitulo>
+                <SubTitulo>{emailUser}</SubTitulo>
             </AreaTextos>
 
             <ScrollView showsVerticalScrollIndicator={false}>
