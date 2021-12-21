@@ -14,8 +14,8 @@ export default function CardVagas({data}){
     return(
         <Container>
             <InfoEmpresa>
-                <TituloVaga>Programador php</TituloVaga>
-                <NomeEmpresa>Google</NomeEmpresa>
+                <TituloVaga></TituloVaga>
+                <NomeEmpresa>Googl</NomeEmpresa>
             </InfoEmpresa>
 
             <InfoGeral>
