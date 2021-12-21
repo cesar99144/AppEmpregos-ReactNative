@@ -36,7 +36,9 @@ export default function Login(){
 
             if(response.data.status == 200){
 
-                 navigation.navigate('DrawerRoutes', {emailUser});
+                var idUser = response.data.idUser;
+
+                navigation.navigate('DrawerRoutes', {idUser});
                  //navigation.navigate('Dashboard', { params: { email: "son" },});
                 console.log(response.data);
 
