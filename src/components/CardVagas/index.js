@@ -14,19 +14,19 @@ export default function CardVagas({data}){
     return(
         <Container>
             <InfoEmpresa>
-                <TituloVaga></TituloVaga>
+                <TituloVaga>{data.titulo}</TituloVaga>
                 <NomeEmpresa>Googl</NomeEmpresa>
             </InfoEmpresa>
 
             <InfoGeral>
 
                 <InfoTipoContrato>
-                    <TextContrato>Integral</TextContrato>
-                    <TextContrato>CLT</TextContrato>
+                    <TextContrato>{data.tipoPresenca}</TextContrato>
+                    <TextContrato>{data.RegimeContratacao}</TextContrato>
                 </InfoTipoContrato>
 
                 <InfoSalario>
-                    <NomeEmpresa>R$ 3000</NomeEmpresa>
+                    <NomeEmpresa>R$ {data.faixaSalarial}</NomeEmpresa>
                 </InfoSalario>
             </InfoGeral>
 
