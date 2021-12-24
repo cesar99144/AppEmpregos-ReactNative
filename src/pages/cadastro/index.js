@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { Platform,TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, ScrollView} from 'react-native';
 import { Container, AreaTextos , Titulo, SubTitulo, TextInfo, ContainerForm, AreaDados, Label, Input, BotaoCadastrar, TextoBotao, AreaInfoConta, BotaoLogin, TextoBotaoLogin } from './style';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import HeaderAuth from "../../components/headerAuth";
 import api from "../../services/api";
@@ -16,26 +16,26 @@ export default function Cadastro(){
     const [senha, setSenha] = useState("");
 
 
-    async function cadastrarUsuario(){
+    // async function cadastrarUsuario(){
         
-        try{
+    //     try{
 
-            const response = await api.post('/candidatos/create', {
-              nome: nome,
-              sobrenome: sobreNome,
-              email: email,
-              senha: senha
-          })
+    //         const response = await api.post('/candidatos/create', {
+    //           nome: nome,
+    //           sobrenome: sobreNome,
+    //           email: email,
+    //           senha: senha
+    //       })
   
-          if(response.data.status == 201){
+    //       if(response.data.status == 201){
   
-                navigation.navigate("ConfirmacaoCadastro");
-          }
+    //             navigation.navigate("ConfirmacaoCadastro");
+    //       }
   
-          }catch(error){
-             alert(error)
-          }
-    }
+    //       }catch(error){
+    //          alert(error)
+    //       }
+    // }
 
     function cadastrar(){
 
@@ -47,8 +47,13 @@ export default function Cadastro(){
         }else{
             
             //alert("chamando")
-           cadastrarUsuario();
-           
+           //cadastrarUsuario();
+           navigation.navigate("ConcluirCadastro", {
+               nomeUsuario: nome,
+               sobreNomeUsuario: sobreNome,
+               emailUsuario: email,
+               senhaUsuario: senha
+           });
         }
         //navigation.navigate("ConfirmacaoCadastro");
     }
@@ -97,7 +102,7 @@ export default function Cadastro(){
                             </AreaDados>
                             <AreaDados>
                                 <BotaoCadastrar onPress={cadastrar}>
-                                    <TextoBotao>Criar conta</TextoBotao>
+                                    <TextoBotao>Próximo</TextoBotao>
                                 </BotaoCadastrar>
                             </AreaDados>
                             
