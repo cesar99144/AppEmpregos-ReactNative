@@ -1,16 +1,82 @@
-import React from "react";
+import React, {useState} from "react";
 import {ScrollView} from "react-native";
 import {Container, AreaTextos, TextInfo} from "./style";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {Titulo, SubTitulo, ContainerForm, AreaDados, Label, Input, BotaoCadastrar, TextoBotao, AreaInfoConta, BotaoLogin, TextoBotaoLogin} from  "../cadastro/style";
 
-import HeaderDashboard from "../../components/headerDashboard";
+import HeaderAuth from "../../components/headerAuth";
+import api from "../../services/api";
 
 export default function ConcluirCadastro(){
 
+    // const nomeUser;
+    // const sobreNomeUser;
+    // const emailUser;
+    // const senhaUser;
+    const navigation = useNavigation();
+    const route = useRoute();
+
+    const nomeUser = route.params?.nomeUsuario;
+    const sobreNomeUser = route.params?.sobreNomeUsuario;
+    const emailUser = route.params?.emailUsuario;
+    const senhaUser = route.params?.senhaUsuario;
+    const [cidadeUser, setCidadeUser] = useState(null);
+    const [estadoUser, setEstadoUser] = useState(null);
+    const [celularUser, setCelularUser] = useState(null);
+    const [formacaoUser, setFormacaoUser] = useState(null);
+    const [experienciaUser, setExperienciaUser] = useState(null);
+    const [areaPretendidaUser, setAreaPretendidaUser] = useState(null);
+    const [faixaSalarialUser, setFaixaSalarialUser] = useState(null);
+
+    async function cadastrar(){
+        try{
+
+            const response = await api.post('/candidatos/create', {
+                nome: nomeUser,
+                sobrenome: sobreNomeUser,
+                email: emailUser,
+                senha: senhaUser,
+                celular: celularUser,
+                estado: estadoUser,
+                cidade: cidadeUser,
+                formacao: formacaoUser,
+                ultimaexperiencia: experienciaUser,
+                areaPretendida: areaPretendidaUser,
+                faixaSalarialPretendida: faixaSalarialUser
+            });
+
+            if(response.data.status == 201){
+        
+                navigation.navigate("ConfirmacaoCadastro");
+            }
+            
+
+        }catch(error){
+
+            alert(error)
+
+        }
+        
+    }
+
+    function verificarDados(){
+
+        // if(cidadeUser == null || estadoUser == null || celularUser == null || formacaoUser == null || experienciaUser == null || areaPretendidaUser == null || faixaSalarialUser == null){
+
+        if(cidadeUser == null){
+
+            alert("Preencha todos os campos");
+        
+        }else{
+
+            cadastrar();
+            
+        }
+    }
+
     return(
         <Container>
-            <HeaderDashboard titulo="Completar cadastro" />
+            <HeaderAuth titulo="Concluir cadastro" />
 
             <AreaTextos>
                 <TextInfo>Todos os campos são necessários</TextInfo>
@@ -21,34 +87,34 @@ export default function ConcluirCadastro(){
                     
                     <AreaDados>
                         <Label>Cidade</Label>
-                        <Input />
+                        <Input onChangeText={ (value) => setCidadeUser(value)} />
                     </AreaDados>
                     <AreaDados>
                         <Label>Estado</Label>
-                        <Input/>
+                        <Input onChangeText={ (value) => setEstadoUser(value)}/>
                     </AreaDados>
                     <AreaDados>
                         <Label>Celular</Label>
-                        <Input/>
+                        <Input onChangeText={ (value) => setCelularUser(value)}/>
                     </AreaDados>
                     <AreaDados>
                         <Label>Formação</Label>
-                        <Input/>
+                        <Input onChangeText={ (value) => setFormacaoUser(value)}/>
                     </AreaDados>
                     <AreaDados>
                         <Label>Ultima experiência</Label>
-                        <Input/>
+                        <Input onChangeText={ (value) => setExperienciaUser(value)}/>
                     </AreaDados>
                     <AreaDados>
                         <Label>Área pretendida</Label>
-                        <Input/>
+                        <Input onChangeText={ (value) => setAreaPretendidaUser(value)}/>
                     </AreaDados>
                     <AreaDados>
                         <Label>Faixa salarial pretendida</Label>
-                        <Input/>
+                        <Input onChangeText={ (value) => setFaixaSalarialUser(value)}/>
                     </AreaDados>
                     <AreaDados>
-                        <BotaoCadastrar>
+                        <BotaoCadastrar onPress={verificarDados}>
                             <TextoBotao>Criar conta</TextoBotao>
                         </BotaoCadastrar>
                     </AreaDados>
