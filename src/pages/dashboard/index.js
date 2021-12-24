@@ -31,6 +31,8 @@ export default function Dashboard({route}){
     const [refreshing, setRefreshing] = useState(false);
     const [usuario, setUsuario] = useState();
 
+    const [vagasRecentes, setVagasRecentes] = useState([]);
+
     async function getDadosUsuario(){
 
         const response = await api.get(`/candidatos/${idUser}`);
@@ -41,17 +43,22 @@ export default function Dashboard({route}){
 
     }
 
+    async function getVagasRecentes(){
+
+        const response = await api.get('/vagas');
+
+        setVagasRecentes(response.data);
+    }
 
     useEffect( () =>{
 
        getDadosUsuario();
+       getVagasRecentes();
+    //    if(dadosUser.cidade == null){
 
-       if(dadosUser.cidade == null){
-
-            //alert(dadosUser.nome+", seu perfil está incompleto");
-
-            navigation.navigate('CompletePerfil');
-       }
+           
+    //         navigation.navigate('CompletePerfil');
+    //    }
        console.log(dadosUser);
 
     }, []);
@@ -59,6 +66,7 @@ export default function Dashboard({route}){
     const onRefresh = () =>{
         setRefreshing(false);
         getDadosUsuario();
+        getVagasRecentes();
     }
 
     if(loading){
@@ -72,18 +80,19 @@ export default function Dashboard({route}){
     }
     return(
         <Container>
-            <HeaderDashboard />
+            <HeaderDashboard titulo="Home" />
+            <ScrollView 
+                    showsVerticalScrollIndicator={false}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    }>
                 { dadosUser &&
                     <AreaTextos>
                         <Titulo>Olá, bem vindo(a) de volta</Titulo>
                         <SubTitulo>{dadosUser.nome}</SubTitulo>
                     </AreaTextos>
                 }
-                <ScrollView 
-                    showsVerticalScrollIndicator={false}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                    }>
+                
                     <AreaPesquisa>
                         <Input placeholder="Pesquisar uma vaga" />
                         <BotaoPesquisar>
@@ -99,8 +108,8 @@ export default function Dashboard({route}){
                         <Titulovagas>Vagas recentes</Titulovagas>
 
                         <ListVagas 
-                            data={[1,2,3,4,5,6,7,8,9,9]}
-                            //data={dadosUser}
+                            data={vagasRecentes}
+                            keyExtractor={ item => String(item.idVaga) }
                             renderItem={ ( { item }) => <CardVagas data={item} />}
                         />
                     </AreaVagas>
