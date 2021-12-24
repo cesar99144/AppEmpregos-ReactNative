@@ -4,8 +4,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 const Drawer = createDrawerNavigator();
 
 import Dashboard from "../pages/dashboard";
-import CompletePerfil from "../pages/completePerfil";
-import ConcluirCadastro from "../pages/concluirCadastro";
+
 
 export default function DrawerRoutes({route: {params}}){
     return(
@@ -15,15 +14,6 @@ export default function DrawerRoutes({route: {params}}){
                 component={Dashboard}
                 initialParams={params}
             />
-            <Drawer.Screen 
-                name="CompletePerfil"
-                component={CompletePerfil}
-            />
-            <Drawer.Screen 
-                name="ConcluirCadastro"
-                component={ConcluirCadastro}
-            />
-
         </Drawer.Navigator>
     );
 }
