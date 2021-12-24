@@ -6,6 +6,8 @@ const Stack = createStackNavigator();
 import Cadastro from "../pages/cadastro";
 import ConfirmacaoCadastro from "../pages/confirmacaoCadastro";
 import Login from "../pages/login";
+import CompletePerfil from "../pages/completePerfil";
+import ConcluirCadastro from "../pages/concluirCadastro";
 
 export default function AuthRoutes(){
     return(
@@ -17,6 +19,14 @@ export default function AuthRoutes(){
                     headerShown: false
                 }}
             />
+            <Stack.Screen  
+                name="ConcluirCadastro"
+                component={ConcluirCadastro}
+                options={{
+                    headerShown: false
+                }}
+            />
+
             <Stack.Screen 
                 name="ConfirmacaoCadastro"
                 component={ConfirmacaoCadastro}
