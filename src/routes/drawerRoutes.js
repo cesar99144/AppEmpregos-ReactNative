@@ -4,7 +4,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 const Drawer = createDrawerNavigator();
 
 import Dashboard from "../pages/dashboard";
-
+import StackDash from "./stackDash";
 
 export default function DrawerRoutes({route: {params}}){
     return(
@@ -13,6 +13,10 @@ export default function DrawerRoutes({route: {params}}){
                 name="Dashboard"
                 component={Dashboard}
                 initialParams={params}
+            />
+            <Drawer.Screen 
+                name="StackDash"
+                component={StackDash}
             />
         </Drawer.Navigator>
     );
