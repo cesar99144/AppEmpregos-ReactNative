@@ -40,7 +40,7 @@ export default function Login(){
 
         }else{
 
-            alert("erro");
+            alert("Verifique os dados");
         }
 
     }
