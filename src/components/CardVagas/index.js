@@ -11,18 +11,18 @@ import {
 } from './style';
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-export default function CardVagas({data}){
+export default function CardVagas({data, navigatePage}){
 
     const navigation = useNavigation();
     // const idVaga = data.idVaga;
 
     function abrirVaga(){
          const idVaga = data.idVaga;
-         navigation.navigate("StackDash", {idVaga});
+         //navigation.navigate("StackDash", {idVaga});
     }
 
     return(
-        <Container onPress={ () => abrirVaga()}>
+        <Container onPress={ () => navigatePage(data)}>
             <InfoEmpresa>
                 <TituloVaga>{data.titulo}</TituloVaga>
                 <NomeEmpresa>Googl</NomeEmpresa>
