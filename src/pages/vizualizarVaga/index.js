@@ -5,25 +5,22 @@ import HeaderStackDash from "../../components/headerStackDash";
 
 import api from "../../services/api";
 
-export default function VizualizarVaga({route}){
+export default function VizualizarVaga(){
 
     const navigation = useNavigation();
-    const {idVaga} = route.params;
+    const {idVaga} = 1;
 
     const [dadosVaga, setDadosVaga] = useState({});
 
     useEffect( () =>{
-        navigation.setParams({
-            idVaga: idVaga,
-          });
-        async function getDadosVaga(){
-            alert(idVaga);
-            const response = await api.get(`vagas/${idVaga}`);
+        // async function getDadosVaga(){
+        //     alert(idVaga);
+        //     const response = await api.get(`vagas/${idVaga}`);
 
-            setDadosVaga(response.data);
-        }
+        //     setDadosVaga(response.data);
+        // }
 
-        getDadosVaga();
+        // getDadosVaga();
 
     }, []);
     return(
