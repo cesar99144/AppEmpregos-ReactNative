@@ -11,7 +11,10 @@ import {
     BotaoPesquisar,
     AreaVagas,
     Titulovagas,
-    ListVagas
+    ListVagas,
+    TopoVagas,
+    BotaoVizualizarTodasVagas,
+    TextoBotaoVaga
 } from './style';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/Feather';
@@ -37,9 +40,15 @@ export default function Dashboard(){
     const {user} = useContext(AuthContext);
 
     function navigateVizualizarVaga(item){
-        // console.log(item.idVaga);
-        navigation.navigate("VizualizarVaga");
+
+        navigation.navigate("VizualizarVaga", { id: item.idVaga});
     }
+
+    function navigateTodasAsVagas(){
+
+        navigation.navigate("ListTodasVagas");
+    }
+
     async function getDadosUsuario(id){
         
         const response = await api.get(`/candidatos/${user.iduser}`);
@@ -51,7 +60,7 @@ export default function Dashboard(){
 
     async function getVagasRecentes(){
 
-        const response = await api.get('/vagas');
+        const response = await api.get('/vagas/recentes');
         
         setVagasRecentes(response.data);
     }
@@ -112,12 +121,18 @@ export default function Dashboard(){
                     </AreaPesquisa>
                 
                     <AreaVagas>
-                        <Titulovagas>Vagas recentes</Titulovagas>
+                        <TopoVagas>
+                            <Titulovagas>Vagas recentes</Titulovagas>
 
+                            <BotaoVizualizarTodasVagas onPress={navigateTodasAsVagas}>
+                                <TextoBotaoVaga>Ver mais</TextoBotaoVaga>
+                            </BotaoVizualizarTodasVagas>
+                        </TopoVagas>
+                        
                         <ListVagas 
                             data={vagasRecentes}
                             keyExtractor={ item => String(item.idVaga) }
-                            renderItem={ ( { item }) => <CardVagas data={item} />}
+                            renderItem={ ( { item }) => <CardVagas data={item} navigatePage={ () => navigateVizualizarVaga(item) } />}
                         />
                     </AreaVagas>
                 

@@ -8,19 +8,21 @@ import api from "../../services/api";
 export default function VizualizarVaga(){
 
     const navigation = useNavigation();
-    const {idVaga} = 1;
+    const route = useRoute();
+
+    const idVaga = route.params?.id;
 
     const [dadosVaga, setDadosVaga] = useState({});
 
     useEffect( () =>{
-        // async function getDadosVaga(){
-        //     alert(idVaga);
-        //     const response = await api.get(`vagas/${idVaga}`);
+        async function getDadosVaga(){
 
-        //     setDadosVaga(response.data);
-        // }
+            const response = await api.get(`vagas/${idVaga}`);
 
-        // getDadosVaga();
+            setDadosVaga(response.data);
+        }
+
+         getDadosVaga();
 
     }, []);
     return(
@@ -33,7 +35,7 @@ export default function VizualizarVaga(){
 
             <AreaDescricao>
                 <TextoDescricao>
-                Programar, desenvolver e implantar sistemas em linguagem PHP, realizar correções em sistemas para atender às necessidades dos usuários, desenvolver trabalhos de montagem, depuração e testes de programas já desenvolvidos.
+                    {dadosVaga.descricao}
                 </TextoDescricao>
             </AreaDescricao>
 
