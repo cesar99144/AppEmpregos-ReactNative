@@ -17,12 +17,12 @@ export default function CardVagas({data}){
     // const idVaga = data.idVaga;
 
     function abrirVaga(){
-        const idVaga = data.idVaga;
-        navigation.navigate("StackDash", {idVaga});
+         const idVaga = data.idVaga;
+         navigation.navigate("StackDash", {idVaga});
     }
 
     return(
-        <Container onPress={abrirVaga}>
+        <Container onPress={ () => abrirVaga()}>
             <InfoEmpresa>
                 <TituloVaga>{data.titulo}</TituloVaga>
                 <NomeEmpresa>Googl</NomeEmpresa>
