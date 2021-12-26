@@ -57,6 +57,21 @@ export const AreaVagas = styled.View`
     margin-top: 3%;
 `;
 
+export const TopoVagas = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+`;
+
+export const BotaoVizualizarTodasVagas = styled.TouchableOpacity`
+    margin-top: 3%;
+`;
+
+export const TextoBotaoVaga = styled.Text`
+    font-size: 20px;
+    color: #393939;
+    font-weight: bold;
+`;
+
 export const Titulovagas = styled.Text`
     font-size: 20px;
     color: #909090;
