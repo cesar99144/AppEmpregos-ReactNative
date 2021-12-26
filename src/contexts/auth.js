@@ -37,7 +37,8 @@ function AuthProvider({ children }){
 
                 // alert("Dados inválidos. Verifique os dados  e tente novamente"+emailUser+senhaUser);
                 // console.log(response.data);
-
+                setUser(null);
+                
                 return false;
             }
 
