@@ -3,8 +3,8 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const Drawer = createDrawerNavigator();
 
-import Dashboard from "../pages/dashboard";
 import StackDash from "./stackDash";
+import ListTodasVagas from "../pages/listTodasVagas";
 
 export default function DrawerRoutes(){
     return(
@@ -12,6 +12,10 @@ export default function DrawerRoutes(){
             <Drawer.Screen 
                 name="StackDash"
                 component={StackDash}
+            />
+            <Drawer.Screen 
+                name="ListTodasVagas"
+                component={ListTodasVagas}
             />
         </Drawer.Navigator>
     );
