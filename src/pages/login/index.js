@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import {ScrollView} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AreaDadosLogin, BotaoLogin } from './style';
@@ -14,6 +14,7 @@ import {
     Label,
     TextoBotao,
 } from './../cadastro/style';
+import { AuthContext } from "../../contexts/auth";
 
 import HeaderAuth from "../../components/headerAuth";
 import api from "../../services/api";
@@ -25,33 +26,21 @@ export default function Login(){
     const [emailUser, setEmail] = useState(null);
     const [senhaUser, setSenha] = useState(null);
 
+    const {user, loginCandidato} = useContext(AuthContext);
+
     async function login(){
 
-        try{
+        const logou = loginCandidato(emailUser, senhaUser);
 
-            const response = await api.post('/candidatos/login', {
-                email: emailUser,
-                senha: senhaUser
-            })
+        if(logou){
 
-            if(response.data.status == 200){
+            const idUser = user.iduser;
 
-                var idUser = response.data.idUser;
+            navigation.navigate('DrawerRoutes');
 
-                navigation.navigate('DrawerRoutes', {idUser});
-                 //navigation.navigate('Dashboard', { params: { email: "son" },});
-                console.log(response.data);
+        }else{
 
-            }else if(response.data.status == 401){
-
-                alert("Dados inválidos. Verifique os dados  e tente novamente"+emailUser+senhaUser);
-                console.log(response.data);
-            }
-
-        }catch(error){
-
-            alert(error)
-            
+            alert("erro");
         }
 
     }

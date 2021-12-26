@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import {ScrollView} from "react-native";
 import {Container, AreaTextos, TextInfo} from "./style";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {Titulo, SubTitulo, ContainerForm, AreaDados, Label, Input, BotaoCadastrar, TextoBotao, AreaInfoConta, BotaoLogin, TextoBotaoLogin} from  "../cadastro/style";
+import { AuthContext } from "../../contexts/auth";
 
 import HeaderAuth from "../../components/headerAuth";
 import api from "../../services/api";
@@ -28,36 +29,22 @@ export default function ConcluirCadastro(){
     const [areaPretendidaUser, setAreaPretendidaUser] = useState(null);
     const [faixaSalarialUser, setFaixaSalarialUser] = useState(null);
 
-    async function cadastrar(){
-        try{
+    const { cadastrarUsuario } = useContext(AuthContext);
 
-            const response = await api.post('/candidatos/create', {
-                nome: nomeUser,
-                sobrenome: sobreNomeUser,
-                email: emailUser,
-                senha: senhaUser,
-                celular: celularUser,
-                estado: estadoUser,
-                cidade: cidadeUser,
-                formacao: formacaoUser,
-                ultimaexperiencia: experienciaUser,
-                areaPretendida: areaPretendidaUser,
-                faixaSalarialPretendida: faixaSalarialUser
-            });
-
-            if(response.data.status == 201){
+    function finalizarCadastro(){
         
-                navigation.navigate("ConfirmacaoCadastro");
-            }
-            
+        const cadastro = cadastrarUsuario(nomeUser, sobreNomeUser, emailUser, senhaUser, cidadeUser, estadoUser, celularUser, formacaoUser, experienciaUser, areaPretendidaUser, faixaSalarialUser);
 
-        }catch(error){
+        if(cadastro){
 
-            alert(error)
+            navigation.navigate("ConfirmacaoCadastro");
 
+        }else{
+
+            alert("Erro");
         }
-        
     }
+
 
     function verificarDados(){
 
@@ -69,7 +56,7 @@ export default function ConcluirCadastro(){
         
         }else{
 
-            cadastrar();
+            finalizarCadastro();
             
         }
     }

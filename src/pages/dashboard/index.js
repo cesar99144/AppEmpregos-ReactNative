@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import {ScrollView, ActivityIndicator, RefreshControl} from "react-native";
 import { 
     Container,
@@ -15,16 +15,17 @@ import {
 } from './style';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/Feather';
+import { AuthContext } from "../../contexts/auth";
 
 import HeaderDashboard from "../../components/headerDashboard";
 import CardVagas from "../../components/CardVagas";
 
 import api from "../../services/api";
 
-export default function Dashboard({route}){
+export default function Dashboard(){
 
     const navigation = useNavigation();
-    const {idUser} = route.params;
+    //const {idUser} = route.params;
 
     const [dadosUser, setDadosUser] = useState({});
     const [loading, setLoading] = useState(true);
@@ -33,11 +34,16 @@ export default function Dashboard({route}){
 
     const [vagasRecentes, setVagasRecentes] = useState([]);
 
-    async function getDadosUsuario(){
+    const {user} = useContext(AuthContext);
 
-        const response = await api.get(`/candidatos/${idUser}`);
-        //const response = await api.get('/candidatos');
+    function navigateVizualizarVaga(item){
+        // console.log(item.idVaga);
+        navigation.navigate("VizualizarVaga");
+    }
+    async function getDadosUsuario(id){
         
+        const response = await api.get(`/candidatos/${user.iduser}`);
+        //const response = await api.get('/candidatos');
         setDadosUser(response.data)
         setLoading(false);
 
@@ -46,14 +52,15 @@ export default function Dashboard({route}){
     async function getVagasRecentes(){
 
         const response = await api.get('/vagas');
-
+        
         setVagasRecentes(response.data);
     }
 
     useEffect( () =>{
-
-       getDadosUsuario();
+        //alert(user.iduser);
+       getDadosUsuario(user.idUser);
        getVagasRecentes();
+       
     //    if(dadosUser.cidade == null){
 
            
