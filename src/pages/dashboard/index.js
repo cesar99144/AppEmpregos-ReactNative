@@ -46,7 +46,7 @@ export default function Dashboard(){
 
     function navigateTodasAsVagas(){
 
-        navigation.navigate("ListTodasVagas");
+        navigation.navigate("Todas as vagas");
     }
 
     async function getDadosUsuario(id){
