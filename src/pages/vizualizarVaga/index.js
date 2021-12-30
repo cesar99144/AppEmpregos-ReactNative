@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import {AreaBotao, AreaDescricao, AreaInfo, AreaTitulo, BotaoCandidatar, CardInfo, Container, TextoBotaoCandidatar, TextoCard, TextoDescricao, TituloCard, TituloVaga} from "./style";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import HeaderStackDash from "../../components/headerStackDash";
+import { AuthContext } from "../../contexts/auth";
 
+import HeaderStackDash from "../../components/headerStackDash";
 import api from "../../services/api";
 
 export default function VizualizarVaga(){
@@ -13,6 +14,30 @@ export default function VizualizarVaga(){
     const idVaga = route.params?.id;
 
     const [dadosVaga, setDadosVaga] = useState({});
+
+    const {user} = useContext(AuthContext);
+
+    async function candidatarParaVaga(){
+
+        // alert(user.iduser);
+        // alert(dadosVaga.idVaga);
+
+        try{
+            const response = await api.post('/vagascandidaturas/create', {
+                vagaId: idVaga,
+                candidatoId: user.iduser
+            });
+
+            if(response.data.status == 201){
+        
+                alert("sucesso")
+            }
+
+        }catch(error){
+
+            alert(error);
+        }
+    }
 
     useEffect( () =>{
         async function getDadosVaga(){
@@ -60,7 +85,7 @@ export default function VizualizarVaga(){
 
             <AreaBotao>
 
-                <BotaoCandidatar>
+                <BotaoCandidatar onPress={candidatarParaVaga}>
                     <TextoBotaoCandidatar>Se candidatar</TextoBotaoCandidatar>
                 </BotaoCandidatar>
 
