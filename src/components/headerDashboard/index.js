@@ -5,6 +5,14 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/Feather';
 
 export default function HeaderDashboard({titulo}){
+
+    const navigation = useNavigation();
+
+    function navegarCandidaturas(){
+
+        navigation.navigate("Candidaturas");
+    }
+
     return(
         <Container>
             <MenuBotao>
@@ -13,8 +21,8 @@ export default function HeaderDashboard({titulo}){
 
             <Titulo>{titulo}</Titulo>
 
-            <FiltroBotao>
-                <Icon name="filter" size={36} color="#FFF" />
+            <FiltroBotao onPress={navegarCandidaturas}>
+                <Icon name="heart" size={36} color="#FFF" />
             </FiltroBotao>
         </Container>
     );

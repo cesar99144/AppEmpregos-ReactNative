@@ -25,7 +25,7 @@ export default function CardVagas({data, navigatePage}){
         <Container onPress={ () => navigatePage(data)}>
             <InfoEmpresa>
                 <TituloVaga>{data.titulo}</TituloVaga>
-                <NomeEmpresa>Googl</NomeEmpresa>
+                <NomeEmpresa></NomeEmpresa>
             </InfoEmpresa>
 
             <InfoGeral>
